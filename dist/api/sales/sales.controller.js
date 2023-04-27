@@ -12,38 +12,38 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
+exports.SalesController = void 0;
 const common_1 = require("@nestjs/common");
-const user_dto_1 = require("./user.dto");
-const user_service_1 = require("./user.service");
-let UserController = class UserController {
-    getUser(id) {
-        return this.service.getUser(id);
+const sales_dto_1 = require("./sales.dto");
+const sales_service_1 = require("./sales.service");
+let SalesController = class SalesController {
+    getSales(id) {
+        return this.service.getSales(id);
     }
-    createUser(body) {
-        return this.service.createUser(body);
+    createSales(body) {
+        return this.service.createSales(body);
     }
 };
 __decorate([
-    (0, common_1.Inject)(user_service_1.UserService),
-    __metadata("design:type", user_service_1.UserService)
-], UserController.prototype, "service", void 0);
+    (0, common_1.Inject)(sales_service_1.SalesService),
+    __metadata("design:type", sales_service_1.SalesService)
+], SalesController.prototype, "service", void 0);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "getUser", null);
+], SalesController.prototype, "getSales", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_dto_1.CreateUserDto]),
+    __metadata("design:paramtypes", [sales_dto_1.CreateSalesDto]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "createUser", null);
-UserController = __decorate([
-    (0, common_1.Controller)('user')
-], UserController);
-exports.UserController = UserController;
-//# sourceMappingURL=user.controller.js.map
+], SalesController.prototype, "createSales", null);
+SalesController = __decorate([
+    (0, common_1.Controller)('sales')
+], SalesController);
+exports.SalesController = SalesController;
+//# sourceMappingURL=sales.controller.js.map

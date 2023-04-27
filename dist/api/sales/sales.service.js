@@ -9,28 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
+exports.SalesService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const user_entity_1 = require("./user.entity");
-let UserService = class UserService {
-    getUser(id) {
+const sales_entity_1 = require("./sales.entity");
+let SalesService = class SalesService {
+    getSales(id) {
         return this.repository.findOne(id);
     }
-    createUser(body) {
-        const user = new user_entity_1.User();
-        user.name = body.name;
-        user.email = body.email;
-        return this.repository.save(user);
+    createSales(body) {
+        const sales = new sales_entity_1.Sales();
+        sales.type = body.type;
+        sales.date = body.date;
+        sales.product = body.product;
+        sales.value = body.value;
+        sales.salesperson = body.salesperson;
+        return this.repository.save(sales);
     }
 };
 __decorate([
-    (0, typeorm_1.InjectRepository)(user_entity_1.User),
+    (0, typeorm_1.InjectRepository)(sales_entity_1.Sales),
     __metadata("design:type", typeorm_2.Repository)
-], UserService.prototype, "repository", void 0);
-UserService = __decorate([
+], SalesService.prototype, "repository", void 0);
+SalesService = __decorate([
     (0, common_1.Injectable)()
-], UserService);
-exports.UserService = UserService;
-//# sourceMappingURL=user.service.js.map
+], SalesService);
+exports.SalesService = SalesService;
+//# sourceMappingURL=sales.service.js.map

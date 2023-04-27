@@ -9,36 +9,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Sales = void 0;
 const typeorm_1 = require("typeorm");
-let User = class User {
+let Sales = class Sales {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Sales.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 120 }),
+    (0, typeorm_1.Column)({ default: 'default-value' }),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], Sales.prototype, "type", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 120 }),
+    (0, typeorm_1.Column)({ default: 'default-value' }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], Sales.prototype, "date", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 'default-value' }),
+    __metadata("design:type", String)
+], Sales.prototype, "product", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 'default-value' }),
+    __metadata("design:type", String)
+], Sales.prototype, "value", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 'default-value' }),
+    __metadata("design:type", String)
+], Sales.prototype, "salesperson", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'boolean', default: false }),
     __metadata("design:type", Boolean)
-], User.prototype, "isDeleted", void 0);
+], Sales.prototype, "isDeleted", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
+], Sales.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)({ type: 'timestamp' }),
     __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-User = __decorate([
+], Sales.prototype, "updatedAt", void 0);
+Sales = __decorate([
     (0, typeorm_1.Entity)()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entity.js.map
+], Sales);
+exports.Sales = Sales;
+//# sourceMappingURL=sales.entity.js.map
