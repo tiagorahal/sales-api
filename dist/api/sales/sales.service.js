@@ -18,14 +18,19 @@ let SalesService = class SalesService {
     getSales(id) {
         return this.repository.findOne(id);
     }
-    createSales(body) {
-        const sales = new sales_entity_1.Sales();
-        sales.type = body.type;
-        sales.date = body.date;
-        sales.product = body.product;
-        sales.value = body.value;
-        sales.salesperson = body.salesperson;
-        return this.repository.save(sales);
+    async createSales(sales) {
+        const createdSales = [];
+        for (const sale of sales) {
+            const newSale = new sales_entity_1.Sales();
+            newSale.type = sale.type;
+            newSale.date = sale.date;
+            newSale.product = sale.product;
+            newSale.value = sale.value;
+            newSale.salesperson = sale.salesperson;
+            const savedSale = await this.repository.save(newSale);
+            createdSales.push(savedSale);
+        }
+        return createdSales;
     }
 };
 __decorate([

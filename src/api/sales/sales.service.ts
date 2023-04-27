@@ -13,15 +13,18 @@ export class SalesService {
     return this.repository.findOne(id);
   }
 
-  public createSales(body: CreateSalesDto): Promise<Sales> {
-    const sales: Sales = new Sales();
-
-    sales.type = body.type;
-    sales.date = body.date;
-    sales.product = body.product;
-    sales.value = body.value;
-    sales.salesperson = body.salesperson;
-
-    return this.repository.save(sales);
-  }
+  public async createSales(sales: CreateSalesDto[]): Promise<Sales[]> {
+    const createdSales: Sales[] = [];
+    for (const sale of sales) {
+      const newSale: Sales = new Sales();
+      newSale.type = sale.type;
+      newSale.date = sale.date;
+      newSale.product = sale.product;
+      newSale.value = sale.value;
+      newSale.salesperson = sale.salesperson;
+      const savedSale: Sales = await this.repository.save(newSale);
+      createdSales.push(savedSale);
+    }
+    return createdSales;
+}
 }

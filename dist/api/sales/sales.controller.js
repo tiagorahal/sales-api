@@ -20,8 +20,14 @@ let SalesController = class SalesController {
     getSales(id) {
         return this.service.getSales(id);
     }
-    createSales(body) {
-        return this.service.createSales(body);
+    async create(body) {
+        const salesItems = Array.isArray(body) ? body : [body];
+        const createSalesPromises = salesItems.map((salesItem) => {
+            return this.service.createSales(salesItem);
+        });
+        const resolvedSalesArrays = await Promise.all(createSalesPromises);
+        const resolvedSales = resolvedSalesArrays.flat();
+        return resolvedSales;
     }
 };
 __decorate([
@@ -41,7 +47,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [sales_dto_1.CreateSalesDto]),
     __metadata("design:returntype", Promise)
-], SalesController.prototype, "createSales", null);
+], SalesController.prototype, "create", null);
 SalesController = __decorate([
     (0, common_1.Controller)('sales')
 ], SalesController);

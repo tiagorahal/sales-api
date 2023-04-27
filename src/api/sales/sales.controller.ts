@@ -14,7 +14,13 @@ export class SalesController {
   }
 
   @Post()
-  public createSales(@Body() body: CreateSalesDto): Promise<Sales> {
-    return this.service.createSales(body);
+  async create(@Body() body: CreateSalesDto): Promise<Sales[]> {
+    const salesItems = Array.isArray(body) ? body : [body];
+    const createSalesPromises = salesItems.map((salesItem) => {
+      return this.service.createSales(salesItem);
+    });
+    const resolvedSalesArrays = await Promise.all(createSalesPromises);
+    const resolvedSales = resolvedSalesArrays.flat(); // Flatten array of arrays
+    return resolvedSales;
   }
 }
