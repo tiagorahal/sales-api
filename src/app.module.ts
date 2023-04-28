@@ -1,19 +1,24 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiModule } from './api/api.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { getEnvPath } from './common/helper/env.helper';
-import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
-
-const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
-
+import { TransactionTypeModule } from './api/transactionType/transaction-type.module';
+import { SalesModule } from './api/sales/sales.module';
+import { Sales } from './api/sales/sales.entity';
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
-    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
-    ApiModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'your_username',
+      password: 'your_password',
+      database: 'your_database',
+      entities: [Sales],
+      synchronize: true,
+    }),
+    TransactionTypeModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
