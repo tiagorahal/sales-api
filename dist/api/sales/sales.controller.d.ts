@@ -1,10 +1,8 @@
-import { CreateSalesDto } from './sales.dto';
-import { SalesService } from './sales.service';
-import { TransactionTypeService } from '../transactionType/transaction-type.service';
+import { CreateSalesDto } from "./sales.dto";
+import { SalesService } from "./sales.service";
 export declare class SalesController {
     private readonly salesService;
-    private readonly transactionTypeService;
-    constructor(salesService: SalesService, transactionTypeService: TransactionTypeService);
+    constructor(salesService: SalesService);
     getAllSales(): CreateSalesDto[];
-    postSales(salesData: CreateSalesDto): Promise<string>;
+    postSales(salesData: CreateSalesDto): string;
 }

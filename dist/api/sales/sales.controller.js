@@ -16,23 +16,20 @@ exports.SalesController = void 0;
 const common_1 = require("@nestjs/common");
 const sales_dto_1 = require("./sales.dto");
 const sales_service_1 = require("./sales.service");
-const transaction_type_service_1 = require("../transactionType/transaction-type.service");
 let SalesController = class SalesController {
-    constructor(salesService, transactionTypeService) {
+    constructor(salesService) {
         this.salesService = salesService;
-        this.transactionTypeService = transactionTypeService;
     }
     getAllSales() {
         return this.salesService.getAllSales();
     }
-    async postSales(salesData) {
+    postSales(salesData) {
         const newSale = new sales_dto_1.CreateSalesDto();
         newSale.type = salesData.type;
         newSale.date = salesData.date;
         newSale.product = salesData.product;
         newSale.value = salesData.value;
         newSale.salesperson = salesData.salesperson;
-        const transactionType = await this.transactionTypeService.createTransactionType(salesData.type.toString(), 'transaction description', 'Income', '+');
         try {
             const result = this.salesService.getSales(newSale);
             return result;
@@ -53,12 +50,11 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [sales_dto_1.CreateSalesDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", String)
 ], SalesController.prototype, "postSales", null);
 SalesController = __decorate([
-    (0, common_1.Controller)('sales'),
-    __metadata("design:paramtypes", [sales_service_1.SalesService,
-        transaction_type_service_1.TransactionTypeService])
+    (0, common_1.Controller)("sales"),
+    __metadata("design:paramtypes", [sales_service_1.SalesService])
 ], SalesController);
 exports.SalesController = SalesController;
 //# sourceMappingURL=sales.controller.js.map
