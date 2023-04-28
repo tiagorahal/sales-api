@@ -8,29 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
+const api_module_1 = require("./api/api.module");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const transaction_type_module_1 = require("./api/transactionType/transaction-type.module");
-const sales_module_1 = require("./api/sales/sales.module");
-const sales_entity_1 = require("./api/sales/sales.entity");
+const env_helper_1 = require("./common/helper/env.helper");
+const typeorm_service_1 = require("./shared/typeorm/typeorm.service");
+const envFilePath = (0, env_helper_1.getEnvPath)(`${__dirname}/common/envs`);
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'your_username',
-                password: 'your_password',
-                database: 'your_database',
-                entities: [sales_entity_1.Sales],
-                synchronize: true,
-            }),
-            transaction_type_module_1.TransactionTypeModule,
-            sales_module_1.SalesModule,
+            config_1.ConfigModule.forRoot({ envFilePath, isGlobal: true }),
+            typeorm_1.TypeOrmModule.forRootAsync({ useClass: typeorm_service_1.TypeOrmConfigService }),
+            api_module_1.ApiModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
