@@ -17,39 +17,44 @@ const common_1 = require("@nestjs/common");
 const sales_dto_1 = require("./sales.dto");
 const sales_service_1 = require("./sales.service");
 let SalesController = class SalesController {
-    getSales(id) {
-        return this.service.getSales(id);
+    constructor(salesService) {
+        this.salesService = salesService;
     }
-    async create(body) {
-        const salesItems = Array.isArray(body) ? body : [body];
-        const createSalesPromises = salesItems.map((salesItem) => {
-            return this.service.createSales(salesItem);
-        });
-        const resolvedSalesArrays = await Promise.all(createSalesPromises);
-        const resolvedSales = resolvedSalesArrays.flat();
-        return resolvedSales;
+    getAllSales() {
+        return this.salesService.getAllSales();
+    }
+    postSales(salesData) {
+        const newSale = new sales_dto_1.CreateSalesDto();
+        newSale.type = salesData.type;
+        newSale.date = salesData.date;
+        newSale.product = salesData.product;
+        newSale.value = salesData.value;
+        newSale.salesperson = salesData.salesperson;
+        try {
+            const result = this.salesService.getSales(newSale);
+            return result;
+        }
+        catch (e) {
+            throw new common_1.HttpException(e.message, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 };
 __decorate([
-    (0, common_1.Inject)(sales_service_1.SalesService),
-    __metadata("design:type", sales_service_1.SalesService)
-], SalesController.prototype, "service", void 0);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    (0, common_1.Get)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], SalesController.prototype, "getSales", null);
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Array)
+], SalesController.prototype, "getAllSales", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [sales_dto_1.CreateSalesDto]),
-    __metadata("design:returntype", Promise)
-], SalesController.prototype, "create", null);
+    __metadata("design:returntype", String)
+], SalesController.prototype, "postSales", null);
 SalesController = __decorate([
-    (0, common_1.Controller)('sales')
+    (0, common_1.Controller)("sales"),
+    __metadata("design:paramtypes", [sales_service_1.SalesService])
 ], SalesController);
 exports.SalesController = SalesController;
 //# sourceMappingURL=sales.controller.js.map

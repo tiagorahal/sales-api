@@ -1,7 +1,6 @@
-import { CreateSalesDto } from './sales.dto';
-import { Sales } from './sales.entity';
+import { CreateSalesDto } from "./sales.dto";
 export declare class SalesService {
-    private readonly repository;
-    getSales(id: number): Promise<Sales>;
-    createSales(sales: CreateSalesDto[]): Promise<Sales[]>;
+    private sales;
+    getAllSales(): CreateSalesDto[];
+    getSales(salesData: CreateSalesDto): string;
 }

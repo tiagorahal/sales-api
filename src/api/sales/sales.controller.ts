@@ -1,26 +1,33 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { CreateSalesDto } from './sales.dto';
-import { Sales } from './sales.entity';
-import { SalesService } from './sales.service';
-
-@Controller('sales')
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+} from "@nestjs/common";
+import { CreateSalesDto } from "./sales.dto";
+import { SalesService } from "./sales.service";
+@Controller("sales")
 export class SalesController {
-  @Inject(SalesService)
-  private readonly service: SalesService;
-
-  @Get(':id')
-  public getSales(@Param('id', ParseIntPipe) id: number): Promise<Sales> {
-    return this.service.getSales(id);
+  constructor(private readonly salesService: SalesService) {}
+  @Get()
+  public getAllSales(): CreateSalesDto[] {
+    return this.salesService.getAllSales();
   }
-
   @Post()
-  async create(@Body() body: CreateSalesDto): Promise<Sales[]> {
-    const salesItems = Array.isArray(body) ? body : [body];
-    const createSalesPromises = salesItems.map((salesItem) => {
-      return this.service.createSales(salesItem);
-    });
-    const resolvedSalesArrays = await Promise.all(createSalesPromises);
-    const resolvedSales = resolvedSalesArrays.flat(); // Flatten array of arrays
-    return resolvedSales;
+  public postSales(@Body() salesData: CreateSalesDto): string {
+    const newSale = new CreateSalesDto();
+    newSale.type = salesData.type;
+    newSale.date = salesData.date;
+    newSale.product = salesData.product;
+    newSale.value = salesData.value;
+    newSale.salesperson = salesData.salesperson;
+    try {
+      const result = this.salesService.getSales(newSale);
+      return result;
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
