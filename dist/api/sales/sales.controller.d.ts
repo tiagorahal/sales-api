@@ -3,6 +3,6 @@ import { SalesService } from "./sales.service";
 export declare class SalesController {
     private readonly salesService;
     constructor(salesService: SalesService);
-    getAllSales(): CreateSalesDto[];
+    getAllSales(): Promise<CreateSalesDto[]>;
     postSales(salesData: CreateSalesDto[]): Promise<string>;
 }
