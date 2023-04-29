@@ -5,7 +5,6 @@ export declare class Sales {
     product: string;
     value: string;
     salesperson: string;
-    isDeleted: boolean;
     createdAt: Date;
     updatedAt: Date;
 }

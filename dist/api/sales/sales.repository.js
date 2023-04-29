@@ -6,20 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SalesModule = void 0;
-const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const sales_controller_1 = require("./sales.controller");
-const sales_service_1 = require("./sales.service");
+exports.SaleRepository = void 0;
+const typeorm_1 = require("typeorm");
 const sales_entity_1 = require("./sales.entity");
-let SalesModule = class SalesModule {
+let SaleRepository = class SaleRepository extends typeorm_1.Repository {
 };
-SalesModule = __decorate([
-    (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([sales_entity_1.Sales])],
-        controllers: [sales_controller_1.SalesController],
-        providers: [sales_service_1.SalesService],
-    })
-], SalesModule);
-exports.SalesModule = SalesModule;
-//# sourceMappingURL=sales.module.js.map
+SaleRepository = __decorate([
+    (0, typeorm_1.EntityRepository)(sales_entity_1.Sales)
+], SaleRepository);
+exports.SaleRepository = SaleRepository;
+//# sourceMappingURL=sales.repository.js.map

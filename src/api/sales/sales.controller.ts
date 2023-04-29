@@ -8,26 +8,27 @@ import {
 } from "@nestjs/common";
 import { CreateSalesDto } from "./sales.dto";
 import { SalesService } from "./sales.service";
-@Controller("sales")
+import { CreateSaleDtoToSaleMapper } from "./sales.mapper";
+@Controller('sales')
 export class SalesController {
   constructor(private readonly salesService: SalesService) {}
   @Get()
-  public getAllSales(): CreateSalesDto[] {
+  async getAllSales(): Promise<CreateSalesDto[]> {
     return this.salesService.getAllSales();
   }
   @Post()
-  public postSales(@Body() salesData: CreateSalesDto): string {
-    const newSale = new CreateSalesDto();
-    newSale.type = salesData.type;
-    newSale.date = salesData.date;
-    newSale.product = salesData.product;
-    newSale.value = salesData.value;
-    newSale.salesperson = salesData.salesperson;
-    try {
-      const result = this.salesService.getSales(newSale);
-      return result;
-    } catch (e) {
-      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+public async postSales(@Body() salesData: CreateSalesDto[]): Promise<string> {
+  try {
+    for (const sale of salesData) {
+      const saleEntity = CreateSaleDtoToSaleMapper.map(sale);
+      await this.salesService.getSales(saleEntity); // or your preferred way to save data to the database
     }
+    return "Sales created successfully!";
+  } catch (error) {
+    throw new HttpException(
+      `Failed to create sales: ${error.message}`,
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
   }
+}
 }

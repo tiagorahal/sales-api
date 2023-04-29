@@ -38,10 +38,6 @@ __decorate([
     __metadata("design:type", String)
 ], Sales.prototype, "salesperson", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
-    __metadata("design:type", Boolean)
-], Sales.prototype, "isDeleted", void 0);
-__decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),
     __metadata("design:type", Date)
 ], Sales.prototype, "createdAt", void 0);

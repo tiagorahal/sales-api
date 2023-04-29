@@ -1,7 +1,7 @@
 export declare class CreateSalesDto {
     type: string;
-    date: Date;
+    date: string;
     product: string;
-    value: number;
+    value: string;
     salesperson: string;
 }

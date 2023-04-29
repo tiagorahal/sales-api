@@ -20,13 +20,6 @@ export class Sales {
   @Column({default: 'default-value' })
   public salesperson: string;
 
-  @Column({ type: 'boolean', default: false })
-  public isDeleted: boolean;
-
-  /*
-   * Create and Update Date Columns
-   */
-
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt!: Date;
 

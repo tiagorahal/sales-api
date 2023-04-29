@@ -14,8 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SalesController = void 0;
 const common_1 = require("@nestjs/common");
-const sales_dto_1 = require("./sales.dto");
 const sales_service_1 = require("./sales.service");
+const sales_mapper_1 = require("./sales.mapper");
 let SalesController = class SalesController {
     constructor(salesService) {
         this.salesService = salesService;
@@ -23,19 +23,16 @@ let SalesController = class SalesController {
     getAllSales() {
         return this.salesService.getAllSales();
     }
-    postSales(salesData) {
-        const newSale = new sales_dto_1.CreateSalesDto();
-        newSale.type = salesData.type;
-        newSale.date = salesData.date;
-        newSale.product = salesData.product;
-        newSale.value = salesData.value;
-        newSale.salesperson = salesData.salesperson;
+    async postSales(salesData) {
         try {
-            const result = this.salesService.getSales(newSale);
-            return result;
+            for (const sale of salesData) {
+                const saleEntity = sales_mapper_1.CreateSaleDtoToSaleMapper.map(sale);
+                await this.salesService.getSales(saleEntity);
+            }
+            return "Sales created successfully!";
         }
-        catch (e) {
-            throw new common_1.HttpException(e.message, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        catch (error) {
+            throw new common_1.HttpException(`Failed to create sales: ${error.message}`, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 };
@@ -49,8 +46,8 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [sales_dto_1.CreateSalesDto]),
-    __metadata("design:returntype", String)
+    __metadata("design:paramtypes", [Array]),
+    __metadata("design:returntype", Promise)
 ], SalesController.prototype, "postSales", null);
 SalesController = __decorate([
     (0, common_1.Controller)("sales"),

@@ -4,5 +4,5 @@ export declare class SalesController {
     private readonly salesService;
     constructor(salesService: SalesService);
     getAllSales(): CreateSalesDto[];
-    postSales(salesData: CreateSalesDto): string;
+    postSales(salesData: CreateSalesDto[]): Promise<string>;
 }
