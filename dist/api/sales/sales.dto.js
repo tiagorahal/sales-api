@@ -14,28 +14,27 @@ const class_validator_1 = require("class-validator");
 class CreateSalesDto {
 }
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)({ message: "Type should not be empty" }),
+    (0, class_validator_1.IsString)({ message: "Type must be a string" }),
     __metadata("design:type", String)
 ], CreateSalesDto.prototype, "type", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", Date)
+    (0, class_validator_1.IsNotEmpty)({ message: "Date should not be empty" }),
+    (0, class_validator_1.IsString)({ message: "Date must be a string" }),
+    __metadata("design:type", String)
 ], CreateSalesDto.prototype, "date", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)({ message: "Product should not be empty" }),
+    (0, class_validator_1.IsString)({ message: "Product must be a string" }),
     __metadata("design:type", String)
 ], CreateSalesDto.prototype, "product", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)({ message: "Value should not be empty" }),
     __metadata("design:type", Number)
 ], CreateSalesDto.prototype, "value", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)({ message: "Salesperson should not be empty" }),
+    (0, class_validator_1.IsString)({ message: "Salesperson must be a string" }),
     __metadata("design:type", String)
 ], CreateSalesDto.prototype, "salesperson", void 0);
 exports.CreateSalesDto = CreateSalesDto;
