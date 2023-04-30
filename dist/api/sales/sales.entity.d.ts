@@ -3,7 +3,7 @@ export declare class Sales {
     type: string;
     date: string;
     product: string;
-    value: string;
+    value: number;
     salesperson: string;
     createdAt: Date;
     updatedAt: Date;

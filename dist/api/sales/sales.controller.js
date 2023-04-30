@@ -19,36 +19,80 @@ const sales_mapper_1 = require("./sales.mapper");
 let SalesController = class SalesController {
     constructor(salesService) {
         this.salesService = salesService;
+        this.profits = {};
+        this.salesData = [];
     }
     async getAllSales() {
         return this.salesService.getAllSales();
     }
     async postSales(salesData) {
+        var _a, _b;
         try {
+            const salesMap = {};
+            const salesArr = [];
             for (const sale of salesData) {
-                if (sale.type === "1") {
-                    sale.type = "1,sale producer,in,+";
-                }
-                else if (sale.type === "2") {
-                    sale.type = "2,sale affiliate,in,+";
-                }
-                else if (sale.type === "3") {
-                    sale.type = "3,paid commission,out,-";
-                }
-                else if (sale.type === "4") {
-                    sale.type = "4,received commission,in,+";
-                }
-                else {
-                    throw new common_1.HttpException(`Invalid value for 'type': ${sale.type}`, common_1.HttpStatus.BAD_REQUEST);
-                }
                 const saleEntity = sales_mapper_1.CreateSaleDtoToSaleMapper.map(sale);
                 await this.salesService.getSales(saleEntity);
+                const amount = Number(sale.value);
+                if (salesMap[sale.salesperson]) {
+                    salesMap[sale.salesperson] += amount * (sale.type === "3" ? -1 : 1);
+                }
+                else {
+                    salesMap[sale.salesperson] = amount * (sale.type === "3" ? -1 : 1);
+                }
             }
-            return "Sales created successfully!";
+            for (const salesPerson in salesMap) {
+                let totalValue = 0;
+                for (const sale of salesData) {
+                    if (sale.salesperson === salesPerson &&
+                        (sale.type === "1" || sale.type === "2" || sale.type === "4")) {
+                        totalValue += Number(sale.value);
+                    }
+                }
+                salesArr.push({
+                    salesPerson: salesPerson,
+                    value: totalValue + salesMap[salesPerson],
+                });
+            }
+            for (const index in salesArr) {
+                const salesPerson = salesArr[index].salesPerson;
+                const type = (_a = this.salesData.find((sale) => sale.salesperson === salesPerson)) === null || _a === void 0 ? void 0 : _a.type;
+                if (type && (type === "1" || type === "3")) {
+                    salesArr[index].salesPerson = `${salesPerson}, producer`;
+                }
+            }
+            this.salesData = salesData;
+            this.profits = salesMap;
+            console.log(salesArr);
+            return "Sales successfully added";
         }
         catch (error) {
-            throw new common_1.HttpException(`Failed to create sales: ${error.message}`, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            if (((_b = error === null || error === void 0 ? void 0 : error.response) === null || _b === void 0 ? void 0 : _b.status) === common_1.HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new common_1.HttpException("Error saving sales", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            throw new common_1.HttpException("Error while processing sales", common_1.HttpStatus.BAD_REQUEST);
         }
+    }
+    getProfits() {
+        return this.profits;
+    }
+    getSalesArr() {
+        var _a;
+        const salesArr = [];
+        for (const salesPerson in this.profits) {
+            salesArr.push({
+                salesPerson: salesPerson,
+                value: this.profits[salesPerson],
+            });
+        }
+        for (const index in salesArr) {
+            const salesPerson = salesArr[index].salesPerson;
+            const type = (_a = this.salesData.find((sale) => sale.salesperson === salesPerson)) === null || _a === void 0 ? void 0 : _a.type;
+            if (type && (type === "1" || type === "3")) {
+                salesArr[index].salesPerson = `${salesPerson}, producer`;
+            }
+        }
+        return salesArr;
     }
 };
 __decorate([
@@ -64,6 +108,18 @@ __decorate([
     __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", Promise)
 ], SalesController.prototype, "postSales", null);
+__decorate([
+    (0, common_1.Get)("profits"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], SalesController.prototype, "getProfits", null);
+__decorate([
+    (0, common_1.Get)("salesArr"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Array)
+], SalesController.prototype, "getSalesArr", null);
 SalesController = __decorate([
     (0, common_1.Controller)("sales"),
     __metadata("design:paramtypes", [sales_service_1.SalesService])

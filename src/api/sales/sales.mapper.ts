@@ -1,13 +1,19 @@
-import { Sales } from "./sales.entity";
 import { CreateSalesDto } from "./sales.dto";
+import { Sales } from "./sales.entity";
+
 export class CreateSaleDtoToSaleMapper {
-  static map(createSaleDto: CreateSalesDto): Sales {
-    const sale = new Sales();
-    sale.type = createSaleDto.type;
-    sale.date = createSaleDto.date;
-    sale.product = createSaleDto.product;
-    sale.value = createSaleDto.value;
-    sale.salesperson = createSaleDto.salesperson;
-    return sale;
+  public static map(createSaleDto: CreateSalesDto): Sales {
+    const type = createSaleDto.type;
+    const date = createSaleDto.date;
+    const product = createSaleDto.product;
+    const value = createSaleDto.value;
+
+    const salesEntity = new Sales();
+    salesEntity.type = type;
+    salesEntity.date = date;
+    salesEntity.product = product;
+    salesEntity.value = value;
+
+    return salesEntity;
   }
 }
