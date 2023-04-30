@@ -14,7 +14,7 @@ To get a local copy up and running follow these simple example steps.
 - `cd sales-api/`
 - `npm run build`
 - `npm run start`
-- after that to test the connection open any terminal and paste this `curl -X POST http://localhost:3001/sales -H "Content-Type: application/json" -d '{"type": "3", "date": "2021-01-15T19:19:30-03:00", "product": "CURSO DE TESTE", "value": "50", "salesperson": "Gandalf"}`
+- after that to test the connection open any terminal and paste the content of the curlCommand.txt.
 
 ## Author
 
