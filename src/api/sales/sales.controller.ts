@@ -112,7 +112,7 @@ export class SalesController {
         salesArr[index].salesPerson = `${salesPerson}, producer`;
       }
     }
-
+    console.log(salesArr)
     return salesArr;
   }
 }
