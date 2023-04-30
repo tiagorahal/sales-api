@@ -92,8 +92,9 @@ let SalesController = class SalesController {
                 salesArr[index].salesPerson = `${salesPerson}, producer`;
             }
         }
-        console.log(salesArr);
-        return salesArr;
+        const salesPeople = salesArr.map((sale) => sale.salesPerson);
+        console.log(salesPeople);
+        return salesPeople;
     }
 };
 __decorate([

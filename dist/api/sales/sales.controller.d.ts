@@ -10,8 +10,5 @@ export declare class SalesController {
     getProfits(): {
         [salesPerson: string]: number;
     };
-    getSalesArr(): {
-        salesPerson: string;
-        value: number;
-    }[];
+    getSalesArr(): string[];
 }

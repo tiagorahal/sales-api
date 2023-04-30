@@ -92,7 +92,7 @@ export class SalesController {
   }
 
   @Get("salesArr")
-  getSalesArr(): { salesPerson: string; value: number }[] {
+  getSalesArr(): string[] {
     const salesArr: { salesPerson: string; value: number }[] = [];
     for (const salesPerson in this.profits) {
       salesArr.push({
@@ -112,7 +112,9 @@ export class SalesController {
         salesArr[index].salesPerson = `${salesPerson}, producer`;
       }
     }
-    console.log(salesArr)
-    return salesArr;
+
+    const salesPeople: string[] = salesArr.map((sale) => sale.salesPerson);
+    console.log(salesPeople)
+    return salesPeople;
   }
 }
