@@ -13,7 +13,7 @@ export class CreateSalesDto {
   public product: string;
 
   @IsNotEmpty({ message: "Value should not be empty" })
-  public value: number;
+  public value: string;
 
   @IsNotEmpty({ message: "Salesperson should not be empty" })
   @IsString({ message: "Salesperson must be a string" })

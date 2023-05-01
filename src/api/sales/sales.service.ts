@@ -1,14 +1,20 @@
-import { Injectable } from "@nestjs/common";
-import { CreateSalesDto } from "./sales.dto";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Sales } from './sales.entity';
+
 @Injectable()
 export class SalesService {
-  [x: string]: any;
-  private sales: CreateSalesDto[] = [];
-  public getAllSales(): CreateSalesDto[] {
-    return this.sales;
+  constructor(
+    @InjectRepository(Sales)
+    private readonly salesRepository: Repository<Sales>
+  ) {}
+
+  async saveSales(sales: { type: string, date: string, product: string, value: string, salesperson: string }[]): Promise<void> {
+    await this.salesRepository.insert(sales);
   }
-  public getSales(salesData: CreateSalesDto): string {
-    this.sales.push(salesData);
-    return "Sale created successfully!";
+
+  async getAllSales(): Promise<Sales[]> {
+    return this.salesRepository.find();
   }
 }

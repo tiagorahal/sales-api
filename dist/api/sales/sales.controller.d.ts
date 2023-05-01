@@ -1,14 +1,13 @@
-import { CreateSalesDto } from "./sales.dto";
-import { SalesService } from "./sales.service";
+import { SalesService } from './sales.service';
 export declare class SalesController {
     private readonly salesService;
-    private profits;
-    private salesData;
+    private readonly logger;
     constructor(salesService: SalesService);
-    getAllSales(): Promise<CreateSalesDto[]>;
-    postSales(salesData: CreateSalesDto[]): Promise<string>;
-    getProfits(): {
-        [salesPerson: string]: number;
-    };
-    getSalesArr(): string[];
+    createSales(sales: {
+        type: string;
+        date: string;
+        product: string;
+        value: string;
+        salesperson: string;
+    }[]): Promise<void>;
 }

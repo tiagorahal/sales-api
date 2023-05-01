@@ -1,10 +1,8 @@
 export declare class Sales {
-    id: number;
+    id: string;
     type: string;
     date: string;
     product: string;
-    value: number;
+    value: string;
     salesperson: string;
-    createdAt: Date;
-    updatedAt: Date;
 }
