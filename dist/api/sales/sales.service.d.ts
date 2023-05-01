@@ -11,4 +11,5 @@ export declare class SalesService {
         salesperson: string;
     }[]): Promise<void>;
     getAllSales(): Promise<Sales[]>;
+    deleteAllSales(): Promise<void>;
 }

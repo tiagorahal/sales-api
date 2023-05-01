@@ -14,24 +14,27 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SalesService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
+const typeorm_1 = require("typeorm");
 const sales_entity_1 = require("./sales.entity");
+const typeorm_2 = require("@nestjs/typeorm");
 let SalesService = class SalesService {
     constructor(salesRepository) {
         this.salesRepository = salesRepository;
     }
     async saveSales(sales) {
-        await this.salesRepository.insert(sales);
+        await this.salesRepository.save(sales);
     }
     async getAllSales() {
         return this.salesRepository.find();
     }
+    async deleteAllSales() {
+        await this.salesRepository.delete({});
+    }
 };
 SalesService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(sales_entity_1.Sales)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(0, (0, typeorm_2.InjectRepository)(sales_entity_1.Sales)),
+    __metadata("design:paramtypes", [typeorm_1.Repository])
 ], SalesService);
 exports.SalesService = SalesService;
 //# sourceMappingURL=sales.service.js.map

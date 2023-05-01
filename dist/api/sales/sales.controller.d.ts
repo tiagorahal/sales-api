@@ -1,4 +1,5 @@
-import { SalesService } from './sales.service';
+import { SalesService } from "./sales.service";
+import { Sales } from "./sales.entity";
 export declare class SalesController {
     private readonly salesService;
     private readonly logger;
@@ -10,4 +11,6 @@ export declare class SalesController {
         value: string;
         salesperson: string;
     }[]): Promise<void>;
+    getAllSales(): Promise<Sales[]>;
+    deleteAllSales(): Promise<void>;
 }

@@ -25,16 +25,34 @@ let SalesController = SalesController_1 = class SalesController {
         this.logger.log(`Received request to create sales: ${JSON.stringify(sales)}`);
         await this.salesService.saveSales(sales);
     }
+    async getAllSales() {
+        return this.salesService.getAllSales();
+    }
+    async deleteAllSales() {
+        await this.salesService.deleteAllSales();
+    }
 };
 __decorate([
-    (0, common_1.Post)('create-sales'),
+    (0, common_1.Post)("create-sales"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", Promise)
 ], SalesController.prototype, "createSales", null);
+__decorate([
+    (0, common_1.Get)("all-sales"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], SalesController.prototype, "getAllSales", null);
+__decorate([
+    (0, common_1.Get)("delete-sales"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], SalesController.prototype, "deleteAllSales", null);
 SalesController = SalesController_1 = __decorate([
-    (0, common_1.Controller)('sales'),
+    (0, common_1.Controller)("sales"),
     __metadata("design:paramtypes", [sales_service_1.SalesService])
 ], SalesController);
 exports.SalesController = SalesController;
