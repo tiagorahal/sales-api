@@ -14,4 +14,7 @@ export declare class SalesController {
     getAllSales(): Promise<Sales[]>;
     deleteAllSales(): Promise<void>;
     getAffiliatesAssociates(): Promise<string[]>;
+    getProfits(): Promise<{
+        [key: string]: number;
+    }>;
 }

@@ -64,4 +64,32 @@ export class SalesController {
 
     return result;
   }
+
+  @Get("profits")
+  async getProfits(): Promise<{ [key: string]: number }> {
+    const allSales = await this.salesService.getAllSales();
+
+    const profits: { [key: string]: number } = {};
+
+    for (let i = 0; i < allSales.length; i++) {
+      if (profits[allSales[i].salesperson] === undefined) {
+        profits[allSales[i].salesperson] = 0;
+      }
+    }
+
+    for (let i = 0; i < allSales.length; i++) {
+      const sale = allSales[i];
+      let profit = profits[sale.salesperson];
+
+      if (sale.type === "1" || sale.type === "2" || sale.type === "4") {
+        profit += parseInt(sale.value);
+      } else if (sale.type === "3") {
+        profit -= parseInt(sale.value);
+      }
+
+      profits[sale.salesperson] = profit;
+    }
+
+    return profits;
+  }
 }

@@ -52,6 +52,27 @@ let SalesController = SalesController_1 = class SalesController {
         });
         return result;
     }
+    async getProfits() {
+        const allSales = await this.salesService.getAllSales();
+        const profits = {};
+        for (let i = 0; i < allSales.length; i++) {
+            if (profits[allSales[i].salesperson] === undefined) {
+                profits[allSales[i].salesperson] = 0;
+            }
+        }
+        for (let i = 0; i < allSales.length; i++) {
+            const sale = allSales[i];
+            let profit = profits[sale.salesperson];
+            if (sale.type === "1" || sale.type === "2" || sale.type === "4") {
+                profit += parseInt(sale.value);
+            }
+            else if (sale.type === "3") {
+                profit -= parseInt(sale.value);
+            }
+            profits[sale.salesperson] = profit;
+        }
+        return profits;
+    }
 };
 __decorate([
     (0, common_1.Post)("create-sales"),
@@ -78,6 +99,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SalesController.prototype, "getAffiliatesAssociates", null);
+__decorate([
+    (0, common_1.Get)("profits"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], SalesController.prototype, "getProfits", null);
 SalesController = SalesController_1 = __decorate([
     (0, common_1.Controller)("sales"),
     __metadata("design:paramtypes", [sales_service_1.SalesService])
