@@ -14,37 +14,29 @@ const typeorm_1 = require("typeorm");
 let Sales = class Sales {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    __metadata("design:type", String)
 ], Sales.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: "default-value" }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Sales.prototype, "type", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: "default-value" }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Sales.prototype, "date", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: "default-value" }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Sales.prototype, "product", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 0 }),
-    __metadata("design:type", Number)
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], Sales.prototype, "value", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: "default-value" }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Sales.prototype, "salesperson", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)({ type: "timestamp" }),
-    __metadata("design:type", Date)
-], Sales.prototype, "createdAt", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)({ type: "timestamp" }),
-    __metadata("design:type", Date)
-], Sales.prototype, "updatedAt", void 0);
 Sales = __decorate([
     (0, typeorm_1.Entity)()
 ], Sales);

@@ -1,34 +1,22 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Sales {
-  @PrimaryGeneratedColumn()
-  public id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column({ default: "default-value" })
-  public type: string;
+  @Column()
+  type: string;
 
-  @Column({ default: "default-value" })
-  public date: string;
+  @Column()
+  date: string;
 
-  @Column({ default: "default-value" })
-  public product: string;
+  @Column()
+  product: string;
 
-  @Column({ default: 0 })
-  public value: number;
+  @Column()
+  value: string;
 
-  @Column({ default: "default-value" })
-  public salesperson: string;
-
-  @CreateDateColumn({ type: "timestamp" })
-  public createdAt!: Date;
-
-  @UpdateDateColumn({ type: "timestamp" })
-  public updatedAt!: Date;
+  @Column()
+  salesperson: string;
 }

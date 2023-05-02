@@ -30,7 +30,7 @@ __decorate([
 ], CreateSalesDto.prototype, "product", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: "Value should not be empty" }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CreateSalesDto.prototype, "value", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: "Salesperson should not be empty" }),
