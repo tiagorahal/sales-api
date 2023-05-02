@@ -12,6 +12,7 @@
 To get a local copy up and running follow these simple example steps.
 - `git clone https://github.com/tiagorahal/sales-api.git`
 - `cd sales-api/`
+- `npm install`
 - `npm run build`
 - `npm run start`
 - after that to test the connection open any terminal and paste the content of the curlCommand.txt.
