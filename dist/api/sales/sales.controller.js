@@ -29,7 +29,28 @@ let SalesController = SalesController_1 = class SalesController {
         return this.salesService.getAllSales();
     }
     async deleteAllSales() {
+        console.log("Transactions Deleted!");
         await this.salesService.deleteAllSales();
+    }
+    async getAffiliatesAssociates() {
+        const allSales = await this.salesService.getAllSales();
+        const uniqueSalespeople = Array.from(new Set(allSales.map((sale) => sale.salesperson)));
+        const result = uniqueSalespeople.map((salesperson) => {
+            const type1Sales = allSales.filter((sale) => sale.salesperson === salesperson && sale.type === "1");
+            const type3Sales = allSales.filter((sale) => sale.salesperson === salesperson && sale.type === "3");
+            let salespersonType = salesperson;
+            if (type1Sales.length > 0 && type3Sales.length > 0) {
+                salespersonType += ",producer";
+            }
+            else if (type1Sales.length > 0 && type3Sales.length === 0) {
+                salespersonType += ",type1-only";
+            }
+            else if (type3Sales.length > 0 && type1Sales.length === 0) {
+                salespersonType += ",type3-only";
+            }
+            return salespersonType;
+        });
+        return result;
     }
 };
 __decorate([
@@ -51,6 +72,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SalesController.prototype, "deleteAllSales", null);
+__decorate([
+    (0, common_1.Get)("affiliates-associates"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], SalesController.prototype, "getAffiliatesAssociates", null);
 SalesController = SalesController_1 = __decorate([
     (0, common_1.Controller)("sales"),
     __metadata("design:paramtypes", [sales_service_1.SalesService])

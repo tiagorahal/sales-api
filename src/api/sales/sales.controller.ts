@@ -32,6 +32,36 @@ export class SalesController {
 
   @Get("delete-sales")
   async deleteAllSales(): Promise<void> {
+    console.log("Transactions Deleted!");
     await this.salesService.deleteAllSales();
+  }
+
+  @Get("affiliates-associates")
+  async getAffiliatesAssociates(): Promise<string[]> {
+    const allSales = await this.salesService.getAllSales();
+    const uniqueSalespeople = Array.from(
+      new Set(allSales.map((sale) => sale.salesperson))
+    );
+    const result = uniqueSalespeople.map((salesperson) => {
+      const type1Sales = allSales.filter(
+        (sale) => sale.salesperson === salesperson && sale.type === "1"
+      );
+      const type3Sales = allSales.filter(
+        (sale) => sale.salesperson === salesperson && sale.type === "3"
+      );
+      let salespersonType = salesperson;
+
+      if (type1Sales.length > 0 && type3Sales.length > 0) {
+        salespersonType += ",producer";
+      } else if (type1Sales.length > 0 && type3Sales.length === 0) {
+        salespersonType += ",type1-only";
+      } else if (type3Sales.length > 0 && type1Sales.length === 0) {
+        salespersonType += ",type3-only";
+      }
+
+      return salespersonType;
+    });
+
+    return result;
   }
 }

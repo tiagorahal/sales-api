@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { Sales } from './sales.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from "@nestjs/common";
+import { Repository } from "typeorm";
+import { Sales } from "./sales.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class SalesService {
   constructor(
     @InjectRepository(Sales)
-    private readonly salesRepository: Repository<Sales>,
+    private readonly salesRepository: Repository<Sales>
   ) {}
 
   async saveSales(
@@ -17,7 +17,7 @@ export class SalesService {
       product: string;
       value: string;
       salesperson: string;
-    }[],
+    }[]
   ): Promise<void> {
     await this.salesRepository.save(sales);
   }
